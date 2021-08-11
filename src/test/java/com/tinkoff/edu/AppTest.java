@@ -9,12 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *
  * @author Elena Butakova
  *
- * Unit test for simple App.
+ * Юнит тест для App "Hello, world!"
  */
 public class AppTest {
-    /**
-     * Rigorous Test :-)
-     */
+
     @Test
     public void shouldAnswerWithTrue() {
         assertTrue(true);

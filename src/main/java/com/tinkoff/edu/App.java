@@ -5,7 +5,7 @@ package com.tinkoff.edu;
  *
  * @author Elena Butakova
  *
- * Hello world!
+ * Hello, world!
  *
  */
 public class App {
