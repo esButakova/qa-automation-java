@@ -1,6 +1,9 @@
 package com.tinkoff.edu.test;
 
-import com.tinkoff.edu.app.LoanCalcController;
+import com.tinkoff.edu.app.LoanRequest;
+import com.tinkoff.edu.app.LoanType;
+
+import static com.tinkoff.edu.app.LoanCalcController.createRequest;
 
 /**
  * Created on 15.08.2021
@@ -11,7 +14,9 @@ import com.tinkoff.edu.app.LoanCalcController;
  */
 public class LoanCalcTest {
     public static void main(String... args) {
-        int requestId = LoanCalcController.createRequest();
+        LoanRequest request=new LoanRequest(LoanType.ip,1,30,3000);
+        int requestId = createRequest(request);
+       // System.out.println(request);
         System.out.println(requestId + " Должно быть 1");
     }
 }
