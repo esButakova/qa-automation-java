@@ -4,7 +4,7 @@ package com.tinkoff.edu.app;
  * Created on 17.08.2021
  *
  * @author Elena Butakova
- *
+ * <p>
  * Валидатор кредитной заявки
  */
 public class LoanRequest {
@@ -34,11 +34,7 @@ public class LoanRequest {
 
     public String toString() {
         return "RQ:{"
-                + this.type + ", "
-                + this.getClientId() + ", "
-                + this.getAmount()
-                + " for " + this.getMonths() + '}';
+                + this.type + ", " + this.getClientId() + ", "
+                + this.getAmount() + " for " + this.getMonths() + '}';
     }
-
-
 }

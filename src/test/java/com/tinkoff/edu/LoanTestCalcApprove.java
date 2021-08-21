@@ -9,10 +9,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class LoanTestCalcApprove {
     @Test
-    public void shouldAnswerWithTrue() {
-        LoanRequest request=new LoanRequest(LoanType.ip,1,30,3000);
+    public void LoanTestCalc_Approve() {
+        LoanRequest request = new LoanRequest(LoanType.ip, 1, 30, 3000);
         int requestId = createRequest(request);
-        assertEquals(1,requestId);
+        assertEquals(1, requestId);
     }
 }
 

@@ -16,7 +16,6 @@ public class LoanCalcTest {
     public static void main(String... args) {
         LoanRequest request=new LoanRequest(LoanType.ip,1,30,3000);
         int requestId = createRequest(request);
-       // System.out.println(request);
         System.out.println(requestId + " Должно быть 1");
     }
 }

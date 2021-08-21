@@ -15,12 +15,10 @@ public class LoanCalcController {
     public static int createRequest(LoanRequest request) {
         log("Информация", request);
         if (validate(request)) {
-            log("Информация", "Валидация заявки пройдена");
-            System.out.println(LoanResponseType.APPROVED);
+            log("Информация", "Валидация завершена. Решение: "+LoanResponseType.APPROVED);
             return LoanCalcService.createRequest(request);
         } else {
-            log("Ошибка", "Валидация заявки не пройдена");
-            System.out.println(LoanResponseType.DENIED);
+            log("Ошибка", "Валидация завершена. Решение: "+LoanResponseType.DENIED);
             return -1;
         }
 
