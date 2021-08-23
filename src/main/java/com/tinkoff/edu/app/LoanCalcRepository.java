@@ -9,9 +9,9 @@ public class LoanCalcRepository {
     private static int requestId = 0;
 
     /**
-     * @return Id запроса
+     * @return объект LoanResponse
      */
-    public static int save(LoanRequest request) {
-        return ++requestId;
+    public LoanResponse save(LoanRequest request) {
+        return new LoanResponse(LoanResponseType.APPROVED,request, ++requestId);
     }
 }

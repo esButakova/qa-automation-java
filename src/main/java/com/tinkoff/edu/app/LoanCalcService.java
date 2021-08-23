@@ -1,6 +1,5 @@
 package com.tinkoff.edu.app;
 
-import static com.tinkoff.edu.app.LoanCalcRepository.save;
 
 /**
  * Created on 15.08.2021
@@ -11,8 +10,9 @@ public class LoanCalcService {
     /**
      * Кредитный калькулятор.
      */
-    public static int createRequest(LoanRequest request) {
+    public LoanResponse createRequest(LoanRequest request) {
         //тут добавить условие  на заявку
-        return save(request);
+        LoanCalcRepository loanCalcRepositry = new LoanCalcRepository();
+        return loanCalcRepositry.save(request);
     }
 }

@@ -12,16 +12,15 @@ public class LoanCalcController {
     /**
      * Валидацция и журналирование запроса.
      */
-    public static int createRequest(LoanRequest request) {
+    public LoanResponse createRequest(LoanRequest request) {
+        LoanCalcService service = new LoanCalcService();
         log("Информация", request);
         if (validate(request)) {
-            log("Информация", "Валидация завершена. Решение: "+LoanResponseType.APPROVED);
-            return LoanCalcService.createRequest(request);
+            log("Информация", "Валидация завершена. Решение: " + LoanResponseType.APPROVED);
+            return service.createRequest(request);
         } else {
-            log("Ошибка", "Валидация завершена. Решение: "+LoanResponseType.DENIED);
-            return -1;
+            log("Ошибка", "Валидация завершена. Решение: " + LoanResponseType.DENIED);
+            return new LoanResponse(LoanResponseType.DENIED, request, -1);
         }
-
-
     }
 }
