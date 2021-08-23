@@ -6,13 +6,12 @@ package com.tinkoff.edu.app;
  * @author Elena Butakova
  */
 public class LoanCalcRepository {
-    private static int requestId;
+    private static int requestId = 0;
 
     /**
-     * @return Id запроса
+     * @return объект LoanResponse
      */
-    public static int save() {
-        int localVar = ++requestId;
-        return localVar;
+    public LoanResponse save(LoanRequest request) {
+        return new LoanResponse(LoanResponseType.APPROVED,request, ++requestId);
     }
 }

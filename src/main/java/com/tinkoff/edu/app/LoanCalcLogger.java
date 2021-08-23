@@ -6,7 +6,12 @@ package com.tinkoff.edu.app;
  * @author Elena Butakova
  */
 public class LoanCalcLogger {
-    public static void log() {
-        System.out.println("calling...");
+    public static void log(String eventType, LoanRequest request) {
+        System.out.println(eventType + ":");
+        System.out.println(request);
+    }
+
+    public static void log(String eventType, String message) {
+        System.out.println(eventType + ": " + message);
     }
 }
