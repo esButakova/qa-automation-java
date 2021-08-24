@@ -7,7 +7,6 @@ package com.tinkoff.edu.app;
  *
  * Валидатор кредитной заявки
  */
-
 public class LoanValidator {
 
     public static boolean validate(LoanRequest request) {

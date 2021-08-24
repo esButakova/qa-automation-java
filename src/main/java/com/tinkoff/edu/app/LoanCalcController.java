@@ -9,15 +9,21 @@ import static com.tinkoff.edu.app.LoanValidator.validate;
  * @author Elena Butakova
  */
 public class LoanCalcController {
+
+    private StaticLoanCalcService staticLoanCalcService;
+
+    public LoanCalcController(LoanCalcRepository repo) {
+        staticLoanCalcService = new IpNotFrendlyServiceStatic(repo);
+    }
+
     /**
      * Валидацция и журналирование запроса.
      */
     public LoanResponse createRequest(LoanRequest request) {
-        LoanCalcService service = new LoanCalcService();
         log("Информация", request);
         if (validate(request)) {
             log("Информация", "Валидация завершена. Решение: " + LoanResponseType.APPROVED);
-            return service.createRequest(request);
+            return staticLoanCalcService.createRequest(request);
         } else {
             log("Ошибка", "Валидация завершена. Решение: " + LoanResponseType.DENIED);
             return new LoanResponse(LoanResponseType.DENIED, request, -1);

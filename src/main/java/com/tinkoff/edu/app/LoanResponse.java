@@ -1,5 +1,10 @@
 package com.tinkoff.edu.app;
 
+/**
+ * Created on 23.08.2021
+ *
+ * @author Elena Butakova
+ */
 public class LoanResponse {
     private final LoanResponseType responseType;
     private final LoanRequest request;
