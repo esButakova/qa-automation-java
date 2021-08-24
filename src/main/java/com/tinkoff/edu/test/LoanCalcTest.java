@@ -1,6 +1,10 @@
 package com.tinkoff.edu.test;
 
-import com.tinkoff.edu.app.*;
+import com.tinkoff.edu.app.controller.LoanCalcController;
+import com.tinkoff.edu.app.enums.LoanType;
+import com.tinkoff.edu.app.model.LoanRequest;
+import com.tinkoff.edu.app.model.LoanResponse;
+import com.tinkoff.edu.app.repository.StaticVariableLoanCalcRepository;
 
 /**
  * Created on 15.08.2021

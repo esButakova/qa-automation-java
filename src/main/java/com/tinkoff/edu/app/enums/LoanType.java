@@ -1,4 +1,4 @@
-package com.tinkoff.edu.app;
+package com.tinkoff.edu.app.enums;
 
 /**
  * Created on 17.08.2021

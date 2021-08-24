@@ -1,4 +1,7 @@
-package com.tinkoff.edu.app;
+package com.tinkoff.edu.app.service;
+
+import com.tinkoff.edu.app.model.LoanRequest;
+import com.tinkoff.edu.app.model.LoanResponse;
 
 /**
  * Created on 23.08.2021

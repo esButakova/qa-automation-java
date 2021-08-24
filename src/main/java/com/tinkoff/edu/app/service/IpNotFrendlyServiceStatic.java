@@ -1,6 +1,12 @@
-package com.tinkoff.edu.app;
+package com.tinkoff.edu.app.service;
 
-import static com.tinkoff.edu.app.LoanCalcLogger.log;
+import com.tinkoff.edu.app.repository.LoanCalcRepository;
+import com.tinkoff.edu.app.model.LoanRequest;
+import com.tinkoff.edu.app.model.LoanResponse;
+import com.tinkoff.edu.app.enums.LoanResponseType;
+import com.tinkoff.edu.app.enums.LoanType;
+
+import static com.tinkoff.edu.app.logger.LoanCalcLogger.log;
 
 /**
  * Created on 23.08.2021
@@ -8,8 +14,8 @@ import static com.tinkoff.edu.app.LoanCalcLogger.log;
  * @author Elena Butakova
  */
 public class IpNotFrendlyServiceStatic extends StaticLoanCalcService {
-    public IpNotFrendlyServiceStatic(LoanCalcRepository loanCalcRepositry) {
-        super(loanCalcRepositry);
+    public IpNotFrendlyServiceStatic(LoanCalcRepository loanCalcRepository) {
+        super(loanCalcRepository);
     }
 
     @Override

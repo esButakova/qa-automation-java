@@ -1,7 +1,14 @@
-package com.tinkoff.edu.app;
+package com.tinkoff.edu.app.controller;
 
-import static com.tinkoff.edu.app.LoanCalcLogger.log;
-import static com.tinkoff.edu.app.LoanValidator.validate;
+import com.tinkoff.edu.app.repository.LoanCalcRepository;
+import com.tinkoff.edu.app.model.LoanRequest;
+import com.tinkoff.edu.app.model.LoanResponse;
+import com.tinkoff.edu.app.enums.LoanResponseType;
+import com.tinkoff.edu.app.service.IpNotFrendlyServiceStatic;
+import com.tinkoff.edu.app.service.StaticLoanCalcService;
+
+import static com.tinkoff.edu.app.logger.LoanCalcLogger.log;
+import static com.tinkoff.edu.app.model.LoanValidator.validate;
 
 /**
  * Created on 15.08.2021

@@ -1,4 +1,7 @@
-package com.tinkoff.edu.app;
+package com.tinkoff.edu.app.model;
+
+import com.tinkoff.edu.app.enums.LoanResponseType;
+import com.tinkoff.edu.app.model.LoanRequest;
 
 /**
  * Created on 23.08.2021
