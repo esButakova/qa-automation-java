@@ -6,7 +6,7 @@ package com.tinkoff.edu.app;
  * @author Elena Butakova
  */
 public class StaticLoanCalcService implements LoanCalcService{
-    private LoanCalcRepository loanCalcRepositry;
+    private final LoanCalcRepository loanCalcRepositry;
 
     public StaticLoanCalcService(LoanCalcRepository loanCalcRepositry) {
         this.loanCalcRepositry = loanCalcRepositry;

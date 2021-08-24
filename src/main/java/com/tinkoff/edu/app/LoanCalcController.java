@@ -10,7 +10,7 @@ import static com.tinkoff.edu.app.LoanValidator.validate;
  */
 public class LoanCalcController {
 
-    private StaticLoanCalcService staticLoanCalcService;
+    private final StaticLoanCalcService staticLoanCalcService;
 
     public LoanCalcController(LoanCalcRepository repo) {
         staticLoanCalcService = new IpNotFrendlyServiceStatic(repo);
