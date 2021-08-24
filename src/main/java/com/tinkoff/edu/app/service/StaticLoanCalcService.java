@@ -10,10 +10,10 @@ import com.tinkoff.edu.app.model.LoanResponse;
  * @author Elena Butakova
  */
 public class StaticLoanCalcService implements LoanCalcService {
-    private final LoanCalcRepository loanCalcRepositry;
+    private final LoanCalcRepository loanCalcRepository;
 
-    public StaticLoanCalcService(LoanCalcRepository loanCalcRepositry) {
-        this.loanCalcRepositry = loanCalcRepositry;
+    public StaticLoanCalcService(LoanCalcRepository loanCalcRepository) {
+        this.loanCalcRepository = loanCalcRepository;
     }
 
     /**
@@ -21,6 +21,6 @@ public class StaticLoanCalcService implements LoanCalcService {
      */
     @Override
     public LoanResponse createRequest(LoanRequest request) {
-        return loanCalcRepositry.save(request);
+        return loanCalcRepository.save(request);
     }
 }

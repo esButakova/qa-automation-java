@@ -13,8 +13,8 @@ import static com.tinkoff.edu.app.logger.LoanCalcLogger.log;
  *
  * @author Elena Butakova
  */
-public class IpNotFrendlyServiceStatic extends StaticLoanCalcService {
-    public IpNotFrendlyServiceStatic(LoanCalcRepository loanCalcRepository) {
+public class IpNotFriendlyServiceStatic extends StaticLoanCalcService {
+    public IpNotFriendlyServiceStatic(LoanCalcRepository loanCalcRepository) {
         super(loanCalcRepository);
     }
 
