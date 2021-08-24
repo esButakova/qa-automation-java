@@ -1,10 +1,12 @@
-package com.tinkoff.edu.app;
+package com.tinkoff.edu.app.model;
+
+import com.tinkoff.edu.app.enums.LoanType;
 
 /**
  * Created on 17.08.2021
  *
  * @author Elena Butakova
- * <p>
+ *
  * Валидатор кредитной заявки
  */
 public class LoanRequest {
@@ -18,6 +20,10 @@ public class LoanRequest {
         this.clientId = clientId;
         this.months = months;
         this.amount = amount;
+    }
+
+    public LoanType getType() {
+        return type;
     }
 
     public int getMonths() {

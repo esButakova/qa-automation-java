@@ -1,4 +1,6 @@
-package com.tinkoff.edu.app;
+package com.tinkoff.edu.app.logger;
+
+import com.tinkoff.edu.app.model.LoanRequest;
 
 /**
  * Created on 15.08.2021

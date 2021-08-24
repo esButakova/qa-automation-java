@@ -1,10 +1,11 @@
 package com.tinkoff.edu.test;
 
-import com.tinkoff.edu.app.LoanCalcController;
-import com.tinkoff.edu.app.LoanRequest;
-import com.tinkoff.edu.app.LoanResponse;
-import com.tinkoff.edu.app.LoanType;
-
+import com.tinkoff.edu.app.controller.LoanCalcController;
+import com.tinkoff.edu.app.enums.LoanType;
+import com.tinkoff.edu.app.model.LoanRequest;
+import com.tinkoff.edu.app.model.LoanResponse;
+import com.tinkoff.edu.app.repository.StaticVariableLoanCalcRepository;
+import com.tinkoff.edu.app.service.StaticLoanCalcService;
 
 /**
  * Created on 15.08.2021
@@ -15,8 +16,8 @@ import com.tinkoff.edu.app.LoanType;
  */
 public class LoanCalcTest {
     public static void main(String... args) {
-        LoanRequest request=new LoanRequest(LoanType.ip,1,30,3000);
-        LoanCalcController controller=new LoanCalcController();
+        LoanRequest request = new LoanRequest(LoanType.ip, 1, 30, 3000);
+        LoanCalcController controller = new LoanCalcController(new StaticLoanCalcService(new StaticVariableLoanCalcRepository()));
         LoanResponse response = controller.createRequest(request);
         System.out.println(response);
     }
