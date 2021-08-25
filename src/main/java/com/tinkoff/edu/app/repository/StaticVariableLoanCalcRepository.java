@@ -3,7 +3,6 @@ package com.tinkoff.edu.app.repository;
 import com.tinkoff.edu.app.enums.LoanResponseType;
 import com.tinkoff.edu.app.model.LoanRequest;
 import com.tinkoff.edu.app.model.LoanResponse;
-import com.tinkoff.edu.app.repository.LoanCalcRepository;
 
 /**
  * Created on 15.08.2021
