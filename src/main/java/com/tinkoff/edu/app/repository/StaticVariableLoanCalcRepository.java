@@ -20,4 +20,8 @@ public class StaticVariableLoanCalcRepository implements LoanCalcRepository {
     public LoanResponse save(LoanRequest request) {
         return new LoanResponse(LoanResponseType.APPROVED,request, ++requestId);
     }
+
+    public static int getRequestId() {
+        return requestId;
+    }
 }
