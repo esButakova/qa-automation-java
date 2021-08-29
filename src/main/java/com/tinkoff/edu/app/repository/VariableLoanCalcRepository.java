@@ -9,7 +9,7 @@ import com.tinkoff.edu.app.model.LoanResponse;
  *
  * @author Elena Butakova
  */
-public class StaticVariableLoanCalcRepository implements LoanCalcRepository {
+public class VariableLoanCalcRepository implements LoanCalcRepository {
     private static int requestId = 0;
 
     /**
