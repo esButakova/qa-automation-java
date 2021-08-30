@@ -13,11 +13,9 @@ public class LoanRequest {
     private final LoanType type;
     private final int months;
     private final int amount;
-    private final int clientId;
 
-    public LoanRequest(LoanType type, int clientId, int months, int amount) {
+    public LoanRequest(LoanType type, int months, int amount) {
         this.type = type;
-        this.clientId = clientId;
         this.months = months;
         this.amount = amount;
     }
@@ -34,13 +32,9 @@ public class LoanRequest {
         return amount;
     }
 
-    public int getClientId() {
-        return clientId;
-    }
-
     public String toString() {
         return "RQ:{"
-                + this.type + ", " + this.getClientId() + ", "
+                + this.type + ", "
                 + this.getAmount() + " for " + this.getMonths() + '}';
     }
 }

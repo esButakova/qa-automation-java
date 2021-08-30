@@ -8,5 +8,5 @@ package com.tinkoff.edu.app.enums;
  * Тип заявителя
  */
 public enum LoanType {
-    person, ip, ooo, none
+    person, ip, ooo
 }
