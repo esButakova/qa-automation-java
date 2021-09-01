@@ -2,6 +2,7 @@ package com.tinkoff.edu.app.model;
 
 import com.tinkoff.edu.app.enums.LoanType;
 
+
 /**
  * Created on 17.08.2021
  *
@@ -13,11 +14,13 @@ public class LoanRequest {
     private final LoanType type;
     private final int months;
     private final int amount;
+    private final String fullName;
 
-    public LoanRequest(LoanType type, int months, int amount) {
+    public LoanRequest(LoanType type, int months, int amount, String fullName) {
         this.type = type;
         this.months = months;
         this.amount = amount;
+        this.fullName = fullName;
     }
 
     public LoanType getType() {
@@ -32,9 +35,15 @@ public class LoanRequest {
         return amount;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
+
     public String toString() {
         return "RQ:{"
                 + this.type + ", "
-                + this.getAmount() + " for " + this.getMonths() + '}';
+                + this.fullName + ", "
+                + this.amount + " for " + this.months + '}';
     }
 }

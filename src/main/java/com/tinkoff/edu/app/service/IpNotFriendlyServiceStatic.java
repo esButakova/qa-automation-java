@@ -22,7 +22,7 @@ public class IpNotFriendlyServiceStatic extends StaticLoanCalcService {
     public LoanResponse createRequest(LoanRequest request) {
         if (request.getType().equals(LoanType.ip)) {
             log("Ошибка", "IpNotFrendlyService");
-            return new LoanResponse(LoanResponseType.DENIED, request, -1);
+            return new LoanResponse(LoanResponseType.DENIED, request);
         }
         return super.createRequest(request);
     }

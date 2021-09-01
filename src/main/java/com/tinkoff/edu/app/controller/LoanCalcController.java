@@ -5,6 +5,8 @@ import com.tinkoff.edu.app.model.LoanResponse;
 import com.tinkoff.edu.app.enums.LoanResponseType;
 import com.tinkoff.edu.app.service.LoanCalcService;
 
+import java.util.UUID;
+
 import static com.tinkoff.edu.app.logger.LoanCalcLogger.log;
 
 /**
@@ -18,6 +20,16 @@ public class LoanCalcController {
 
     public LoanCalcController(LoanCalcService service) {
         this.service = service;
+    }
+
+
+    public LoanResponseType getLoanStatus(UUID uuid) {
+        return service.getLoanStatus(uuid);
+    }
+
+
+    public LoanResponseType updateLoanStatus(UUID uuid, LoanResponseType loanType) {
+        return service.updateLoanStatus(uuid, loanType);
     }
 
     /**
