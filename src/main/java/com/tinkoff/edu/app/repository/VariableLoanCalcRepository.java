@@ -1,12 +1,9 @@
 package com.tinkoff.edu.app.repository;
 
-import com.tinkoff.edu.app.enums.LoanResponseType;
-import com.tinkoff.edu.app.model.LoanRequest;
 import com.tinkoff.edu.app.model.LoanResponse;
 
-import static com.tinkoff.edu.app.enums.LoanResponseType.APPROVED;
-import static com.tinkoff.edu.app.enums.LoanResponseType.DENIED;
-import static com.tinkoff.edu.app.enums.LoanType.*;
+import java.util.UUID;
+
 
 /**
  * Created on 15.08.2021
@@ -14,7 +11,8 @@ import static com.tinkoff.edu.app.enums.LoanType.*;
  * @author Elena Butakova
  */
 public class VariableLoanCalcRepository implements LoanCalcRepository {
-    private int requestId;
+    private static int lastElementId = 0;
+    private static LoanResponse[] loans = new LoanResponse[10000];
 
     /**
      * TODO persist request
@@ -22,53 +20,29 @@ public class VariableLoanCalcRepository implements LoanCalcRepository {
      * @return Request Id
      */
     @Override
-    public LoanResponse save(LoanRequest request) {
-        if (request == null) {
-            return new LoanResponse(DENIED, request, -1);
-        }
-        if ((request.getMonths() <= 0) || (request.getAmount() <= 0)) {
-            return new LoanResponse(DENIED, request, -1);
-        }
-        LoanResponseType responseType = calculateResponseType(request);
-        return new LoanResponse(responseType, request, ++requestId);
+    public LoanResponse save(LoanResponse response) {
+
+        loans[lastElementId++] = response;
+        return response;
     }
 
-    public LoanResponseType calculateResponseType(LoanRequest request) {
-        if (request.getType().equals(person)) {
-            if (request.getAmount() <= 10000) {
-                if (request.getMonths() <= 12) {
-                    return APPROVED;
-                } else {
-                    //непокрытая ветка
-                    return DENIED;
-                }
-            } else {
-                if (request.getMonths() > 12) {
-                    return DENIED;
-                } else {
-                    //непокрытая ветка
-                    return DENIED;
-                }
+    @Override
+    public void update(LoanResponse response) {
+        UUID uuid = response.getId();
+        for (int i = 0; i < loans.length && i < lastElementId; i++) {
+            if (loans[i].getId().equals(uuid)) {
+                loans[i] = response;
             }
         }
-
-        if (request.getType().equals(ooo)) {
-            if (request.getAmount() <= 10000) {
-                return DENIED;
-            } else {
-                if (request.getMonths() < 12) {
-                    return APPROVED;
-                } else {
-                    return DENIED;
-                }
-            }
-        }
-
-        if (request.getType().equals(ip)) {
-            return DENIED;
-        }
-
-        return DENIED;
     }
 
+    @Override
+    public LoanResponse find(UUID uuid) {
+        for (int i = 0; i < loans.length && i < lastElementId; i++) {
+            if (loans[i].getId().equals(uuid)) {
+                return loans[i];
+            }
+        }
+        return null;
+    }
 }
