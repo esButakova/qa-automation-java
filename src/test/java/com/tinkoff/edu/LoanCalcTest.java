@@ -43,8 +43,7 @@ public class LoanCalcTest {
     @DisplayName("Отказ, если запрос null")
     public void shouldGetErrorWhenApplyNullRequest() {
         LoanResponse response = calcController.createRequest(null);
-        assertEquals(LoanResponseType.DENIED, response.getResponseType());
-        assertNull(response.getRequest());
+        assertNull(response);
     }
 
     @Test
@@ -52,7 +51,7 @@ public class LoanCalcTest {
     public void shouldGetErrorWhenApplyZeroAmountRequest() {
         request = new LoanRequest(person, 10, 0, "Петро Сергеич");
         LoanResponse response = calcController.createRequest(request);
-        assertEquals(LoanResponseType.DENIED, response.getResponseType());
+        assertNull(response);
     }
 
     @Test
@@ -60,7 +59,7 @@ public class LoanCalcTest {
     public void shouldGetErrorWhenApplyNegativeAmountRequest() {
         request = new LoanRequest(person, 10, -10_000, "Михайло Андреич");
         LoanResponse response = calcController.createRequest(request);
-        assertEquals(LoanResponseType.DENIED, response.getResponseType());
+        assertNull(response);
     }
 
     @Test
@@ -68,7 +67,7 @@ public class LoanCalcTest {
     public void shouldGetErrorWhenApplyZeroMonthsRequest() {
         request = new LoanRequest(ooo, 0, 12, "Криптофонд");
         LoanResponse response = calcController.createRequest(request);
-        assertEquals(LoanResponseType.DENIED, response.getResponseType());
+        assertNull(response);
     }
 
     @Test
@@ -76,7 +75,7 @@ public class LoanCalcTest {
     public void shouldGetErrorWhenApplyNegativeMonthsRequest() {
         request = new LoanRequest(ooo, -1, 12, "Самса и Партнеры");
         LoanResponse response = calcController.createRequest(request);
-        assertEquals(LoanResponseType.DENIED, response.getResponseType());
+        assertNull(response);
     }
 
     @Test

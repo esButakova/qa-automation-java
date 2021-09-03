@@ -25,85 +25,29 @@ public class VariableLoanCalcRepository implements LoanCalcRepository {
      * @return Request Id
      */
     @Override
-    public LoanResponse save(LoanRequest request) {
-        if (request == null) {
-            return new LoanResponse(DENIED, null);
-        }
-        if ((request.getMonths() <= 0) || (request.getAmount() <= 0)) {
-            return new LoanResponse(DENIED, request);
-        }
-
-        LoanResponseType responseType = calculateResponseType(request);
-        LoanResponse response = new LoanResponse(responseType, request);
+    public LoanResponse save(LoanResponse response) {
 
         loans[lastElementId++] = response;
-
         return response;
     }
 
     @Override
-    public LoanResponseType getLoanStatus(UUID uuid) {
+    public void update(LoanResponse response) {
+        UUID uuid = response.getId();
         for (int i = 0; i < loans.length && i < lastElementId; i++) {
             if (loans[i].getId().equals(uuid)) {
-                return loans[i].getResponseType();
+                loans[i] = response;
             }
         }
-        return null;
     }
 
     @Override
-    public LoanResponseType updateLoanStatus(UUID uuid, LoanResponseType loanType) {
+    public LoanResponse find(UUID uuid) {
         for (int i = 0; i < loans.length && i < lastElementId; i++) {
             if (loans[i].getId().equals(uuid)) {
-                loans[i].setResponseType(loanType);
-                return loans[i].getResponseType();
+                return loans[i];
             }
         }
         return null;
-    }
-
-    public LoanResponseType calculateResponseType(LoanRequest request) {
-        LoanResponseType responseType = null;
-
-        switch (request.getType()) {
-            case person: {
-
-                if (request.getAmount() <= 10000) {
-                    if (request.getMonths() <= 12) {
-                        responseType = APPROVED;
-                    } else {
-                        //непокрытая ветка
-                        responseType = DENIED;
-                    }
-                } else {
-                    if (request.getMonths() > 12) {
-                        responseType = DENIED;
-                    } else {
-                        //непокрытая ветка
-                        responseType = DENIED;
-                    }
-                }
-                break;
-            }
-
-            case ooo: {
-                if (request.getAmount() <= 10000) {
-                    responseType = DENIED;
-                } else {
-                    if (request.getMonths() < 12) {
-                        responseType = APPROVED;
-                    } else {
-                        responseType = DENIED;
-                    }
-                }
-                break;
-            }
-
-            case ip: {
-                responseType = DENIED;
-                break;
-            }
-        }
-        return responseType;
     }
 }

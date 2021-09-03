@@ -18,4 +18,5 @@ public interface LoanCalcService {
     LoanResponseType getLoanStatus(UUID uuid);
 
     LoanResponseType updateLoanStatus(UUID uuid, LoanResponseType loanType);
+
 }

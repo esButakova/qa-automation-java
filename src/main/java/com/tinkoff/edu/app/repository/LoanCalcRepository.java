@@ -5,6 +5,7 @@ import com.tinkoff.edu.app.enums.LoanType;
 import com.tinkoff.edu.app.model.LoanRequest;
 import com.tinkoff.edu.app.model.LoanResponse;
 
+import java.sql.Savepoint;
 import java.util.UUID;
 
 /**
@@ -13,9 +14,12 @@ import java.util.UUID;
  * @author Elena Butakova
  */
 public interface LoanCalcRepository {
-    LoanResponse save(LoanRequest request);
 
-    LoanResponseType getLoanStatus(UUID uuid);
+    LoanResponse save(LoanResponse response);
 
-    LoanResponseType updateLoanStatus(UUID uuid, LoanResponseType loanType);
+    void update(LoanResponse response);
+
+    LoanResponse find(UUID uuid);
+
+
 }
