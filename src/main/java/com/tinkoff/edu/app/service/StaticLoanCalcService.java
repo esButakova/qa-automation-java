@@ -80,40 +80,36 @@ public class StaticLoanCalcService implements LoanCalcService {
 
                 if (request.getAmount() <= 10000) {
                     if (request.getMonths() <= 12) {
-                        responseType = APPROVED;
+                        return APPROVED;
                     } else {
                         //непокрытая ветка
-                        responseType = DENIED;
+                        return DENIED;
                     }
                 } else {
                     if (request.getMonths() > 12) {
-                        responseType = DENIED;
+                        return DENIED;
                     } else {
                         //непокрытая ветка
-                        responseType = DENIED;
+                        return DENIED;
                     }
                 }
-                break;
             }
 
             case ooo: {
                 if (request.getAmount() <= 10000) {
-                    responseType = DENIED;
+                    return DENIED;
                 } else {
                     if (request.getMonths() < 12) {
-                        responseType = APPROVED;
+                        return APPROVED;
                     } else {
-                        responseType = DENIED;
+                        return DENIED;
                     }
                 }
-                break;
             }
 
             case ip: {
-                responseType = DENIED;
-                break;
+                return DENIED;
             }
-
         }
         return responseType;
     }
