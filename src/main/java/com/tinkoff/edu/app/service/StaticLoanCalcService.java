@@ -1,7 +1,7 @@
 package com.tinkoff.edu.app.service;
 
 import com.tinkoff.edu.app.enums.LoanResponseType;
-import com.tinkoff.edu.app.enums.LoanType;
+import com.tinkoff.edu.app.exception.LoanServiceException;
 import com.tinkoff.edu.app.repository.LoanCalcRepository;
 import com.tinkoff.edu.app.model.LoanRequest;
 import com.tinkoff.edu.app.model.LoanResponse;
@@ -29,13 +29,24 @@ public class StaticLoanCalcService implements LoanCalcService {
     @Override
     public LoanResponse createRequest(LoanRequest request) {
 
+        try {
+            validateRequest(request);
+            LoanResponseType loanStatus = calculateResponseType(request);
+            LoanResponse loan = new LoanResponse(loanStatus, request);
+            return loanCalcRepository.save(loan);
+        } catch (IllegalArgumentException e) {
+            throw new LoanServiceException("Ошибка валидации запроса", e);
+        }
+        /*
+
+
         if (isRequestValid(request)) {
             LoanResponseType loanStatus = calculateResponseType(request);
             LoanResponse loan = new LoanResponse(loanStatus, request);
             return loanCalcRepository.save(loan);
         } else {
             return null;
-        }
+        }*/
     }
 
     @Override
@@ -60,21 +71,49 @@ public class StaticLoanCalcService implements LoanCalcService {
         return status;
     }
 
-    private boolean isRequestValid(LoanRequest request) {
+    private void validateRequest(LoanRequest request) {
+        String validationResult = getRequestValidationMessage(request);
+        if (validationResult != null) {
+            throw new IllegalArgumentException(validationResult);
+        }
+    }
+
+    private String getRequestValidationMessage(LoanRequest request) {
         if (request == null) {
+            // return false;
+            //throw new IllegalArgumentException("Пустой запрос");
+            return "Пустой запрос";
+        }
+
+        if (request.getFullName() == null || !isFullNameValid(request.getFullName())) {
+            return "Неправильно задано имя.";
+        }
+
+        if (request.getAmount() < 0.01 || request.getAmount() > 999_999.99) {
+            return "Некорректная запрашиваемая сумма";
+        }
+        if (request.getMonths() < 1 || request.getMonths() > 100) {
+            return "Некорректно задан срок";
+        }
+        return null;
+    }
+
+    private boolean isFullNameValid(String name) {
+
+        if (name.length() < 10 || name.length() > 100) {
             return false;
         }
-        if ((request.getMonths() <= 0) || (request.getAmount() <= 0)) {
-            return false;
+
+        char[] chars = name.toCharArray();
+        for (char c : chars) {
+            if (!Character.isLetter(c) && Character.compare(c, '-') != 0) {
+                return false;
+            }
         }
         return true;
     }
 
-
     private LoanResponseType calculateResponseType(LoanRequest request) {
-        LoanResponseType responseType = null;
-
-
         switch (request.getType()) {
             case person: {
 
@@ -110,7 +149,10 @@ public class StaticLoanCalcService implements LoanCalcService {
             case ip: {
                 return DENIED;
             }
+
+            default: {
+                throw new IllegalArgumentException("Тип заявителя некорректный");
+            }
         }
-        return responseType;
     }
 }
