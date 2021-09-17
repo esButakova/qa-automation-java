@@ -35,7 +35,7 @@ public class StaticLoanCalcService implements LoanCalcService {
         try {
             validateRequest(request);
             LoanResponseType loanStatus = calculateResponseType(request);
-            LoanResponse loan = new LoanResponse(loanStatus, request);
+            LoanResponse loan = new LoanResponse(loanStatus, request, UUID.randomUUID());
             return loanCalcRepository.save(loan);
         } catch (IllegalArgumentException e) {
             throw new LoanServiceException("Ошибка валидации запроса", e);
