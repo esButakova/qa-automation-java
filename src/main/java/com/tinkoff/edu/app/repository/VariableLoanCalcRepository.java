@@ -1,8 +1,10 @@
 package com.tinkoff.edu.app.repository;
 
+import com.tinkoff.edu.app.enums.LoanType;
 import com.tinkoff.edu.app.model.LoanResponse;
 
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -11,8 +13,7 @@ import java.util.UUID;
  * @author Elena Butakova
  */
 public class VariableLoanCalcRepository implements LoanCalcRepository {
-    private static int lastElementId = 0;
-    private static LoanResponse[] loans = new LoanResponse[10000];
+    private static final Map<UUID, LoanResponse> loans = new HashMap<>();
 
     /**
      * TODO persist request
@@ -21,28 +22,24 @@ public class VariableLoanCalcRepository implements LoanCalcRepository {
      */
     @Override
     public LoanResponse save(LoanResponse response) {
-
-        loans[lastElementId++] = response;
+        loans.put(response.getId(), response);
         return response;
     }
 
     @Override
     public void update(LoanResponse response) {
-        UUID uuid = response.getId();
-        for (int i = 0; i < loans.length && i < lastElementId; i++) {
-            if (loans[i].getId().equals(uuid)) {
-                loans[i] = response;
-            }
-        }
+        save(response);
     }
 
     @Override
     public LoanResponse find(UUID uuid) {
-        for (int i = 0; i < loans.length && i < lastElementId; i++) {
-            if (loans[i].getId().equals(uuid)) {
-                return loans[i];
-            }
-        }
-        return null;
+        return loans.get(uuid);
+    }
+
+    @Override
+    public List<LoanResponse> findByType(LoanType type) {
+        return loans.values().stream()
+                .filter(loanResponse -> type.equals(loanResponse.getRequest().getType()))
+                .collect(Collectors.toList());
     }
 }

@@ -6,6 +6,7 @@ import com.tinkoff.edu.app.model.LoanRequest;
 import com.tinkoff.edu.app.model.LoanResponse;
 
 import java.sql.Savepoint;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -21,5 +22,6 @@ public interface LoanCalcRepository {
 
     LoanResponse find(UUID uuid);
 
+    List<LoanResponse> findByType(LoanType type);
 
 }

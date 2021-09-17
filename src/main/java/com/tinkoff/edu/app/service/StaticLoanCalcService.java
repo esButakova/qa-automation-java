@@ -1,11 +1,14 @@
 package com.tinkoff.edu.app.service;
 
+import com.tinkoff.edu.app.constants.ValidatorConstants;
 import com.tinkoff.edu.app.enums.LoanResponseType;
+import com.tinkoff.edu.app.enums.LoanType;
 import com.tinkoff.edu.app.exception.LoanServiceException;
 import com.tinkoff.edu.app.repository.LoanCalcRepository;
 import com.tinkoff.edu.app.model.LoanRequest;
 import com.tinkoff.edu.app.model.LoanResponse;
 
+import java.util.List;
 import java.util.UUID;
 
 import static com.tinkoff.edu.app.enums.LoanResponseType.APPROVED;
@@ -37,16 +40,6 @@ public class StaticLoanCalcService implements LoanCalcService {
         } catch (IllegalArgumentException e) {
             throw new LoanServiceException("Ошибка валидации запроса", e);
         }
-        /*
-
-
-        if (isRequestValid(request)) {
-            LoanResponseType loanStatus = calculateResponseType(request);
-            LoanResponse loan = new LoanResponse(loanStatus, request);
-            return loanCalcRepository.save(loan);
-        } else {
-            return null;
-        }*/
     }
 
     @Override
@@ -71,6 +64,11 @@ public class StaticLoanCalcService implements LoanCalcService {
         return status;
     }
 
+    @Override
+    public List<LoanResponse> findByType(LoanType type) {
+        return loanCalcRepository.findByType(type);
+    }
+
     private void validateRequest(LoanRequest request) {
         String validationResult = getRequestValidationMessage(request);
         if (validationResult != null) {
@@ -80,20 +78,18 @@ public class StaticLoanCalcService implements LoanCalcService {
 
     private String getRequestValidationMessage(LoanRequest request) {
         if (request == null) {
-            // return false;
-            //throw new IllegalArgumentException("Пустой запрос");
-            return "Пустой запрос";
+            return ValidatorConstants.ERROR_NULL_REQUEST;
         }
 
         if (request.getFullName() == null || !isFullNameValid(request.getFullName())) {
-            return "Неправильно задано имя.";
+            return ValidatorConstants.ERROR_FULLNAME_REQUEST;
         }
 
         if (request.getAmount() < 0.01 || request.getAmount() > 999_999.99) {
-            return "Некорректная запрашиваемая сумма";
+            return ValidatorConstants.ERROR_AMOUNT_REQUEST;
         }
         if (request.getMonths() < 1 || request.getMonths() > 100) {
-            return "Некорректно задан срок";
+            return ValidatorConstants.ERROR_MONTH_REQUEST;
         }
         return null;
     }
@@ -115,7 +111,7 @@ public class StaticLoanCalcService implements LoanCalcService {
 
     private LoanResponseType calculateResponseType(LoanRequest request) {
         switch (request.getType()) {
-            case person: {
+            case PERSON: {
 
                 if (request.getAmount() <= 10000) {
                     if (request.getMonths() <= 12) {
@@ -134,7 +130,7 @@ public class StaticLoanCalcService implements LoanCalcService {
                 }
             }
 
-            case ooo: {
+            case OOO: {
                 if (request.getAmount() <= 10000) {
                     return DENIED;
                 } else {
@@ -146,7 +142,7 @@ public class StaticLoanCalcService implements LoanCalcService {
                 }
             }
 
-            case ip: {
+            case IP: {
                 return DENIED;
             }
 

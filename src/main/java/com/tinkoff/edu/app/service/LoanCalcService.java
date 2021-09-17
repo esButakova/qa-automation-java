@@ -5,6 +5,7 @@ import com.tinkoff.edu.app.enums.LoanType;
 import com.tinkoff.edu.app.model.LoanRequest;
 import com.tinkoff.edu.app.model.LoanResponse;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -18,5 +19,7 @@ public interface LoanCalcService {
     LoanResponseType getLoanStatus(UUID uuid);
 
     LoanResponseType updateLoanStatus(UUID uuid, LoanResponseType loanType);
+
+    List<LoanResponse> findByType(LoanType type);
 
 }
