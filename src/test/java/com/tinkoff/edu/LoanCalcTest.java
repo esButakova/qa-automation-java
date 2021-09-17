@@ -260,7 +260,7 @@ public class LoanCalcTest {
     }
 
     @Test
-    @DisplayName("Поиск ООО ")
+    @DisplayName("Поиск ООО")
     public void shouldFindOOO() {
         request = new LoanRequest(OOO, 11, 10_001, "ОООКриптофонд");
         LoanRequest requestIp = new LoanRequest(IP, 11, 10_001, "ИпДляТестаООО");
