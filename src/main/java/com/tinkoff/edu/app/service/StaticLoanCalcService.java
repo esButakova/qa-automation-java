@@ -40,16 +40,6 @@ public class StaticLoanCalcService implements LoanCalcService {
         } catch (IllegalArgumentException e) {
             throw new LoanServiceException("Ошибка валидации запроса", e);
         }
-        /*
-
-
-        if (isRequestValid(request)) {
-            LoanResponseType loanStatus = calculateResponseType(request);
-            LoanResponse loan = new LoanResponse(loanStatus, request);
-            return loanCalcRepository.save(loan);
-        } else {
-            return null;
-        }*/
     }
 
     @Override

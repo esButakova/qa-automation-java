@@ -262,8 +262,12 @@ public class LoanCalcTest {
     @Test
     @DisplayName("Поиск ООО ")
     public void shouldFindOOO() {
-        request = new LoanRequest(OOO, 11, 10_001, "Криптофонд");
+        request = new LoanRequest(OOO, 11, 10_001, "ОООКриптофонд");
+        LoanRequest request_ip = new LoanRequest(IP, 11, 10_001, "ИпДляТестаООО");
+        LoanRequest request_person = new LoanRequest(PERSON, 11, 10_001, "ФизЛицоДляТестаООО");
         calcController.createRequest(request);
+        calcController.createRequest(request_ip);
+        calcController.createRequest(request_person);
         List<LoanResponse> responseList = calcController.findByType(OOO);
         assertTrue(responseList.size() > 0);
         responseList.forEach(response -> assertEquals(response.getRequest().getType(), OOO));
