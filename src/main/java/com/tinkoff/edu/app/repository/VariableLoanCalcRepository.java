@@ -1,15 +1,14 @@
 package com.tinkoff.edu.app.repository;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.tinkoff.edu.app.enums.LoanType;
-import com.tinkoff.edu.app.logger.LoanCalcLogger;
 import com.tinkoff.edu.app.model.LoanResponse;
 import lombok.SneakyThrows;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -20,10 +19,16 @@ import java.util.stream.Collectors;
  * @author Elena Butakova
  */
 public class VariableLoanCalcRepository implements LoanCalcRepository {
-    private static final Map<UUID, LoanResponse> loans = new HashMap<>();
-    //    private File file = new File("loanRepo.txt");
-    private final Path path = Path.of("Pepka.txt");
-
+    private static final Path path = Path.of("Pepka.txt");
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectWriter ow = objectMapper.writer();
+    private static final Map<UUID, LoanResponse> loans =
+            VariableLoanCalcRepository.getResponsesFromFile();
+    /*
+     * {id:1,value:A}
+     * {id:2, value:B}
+     * {id:3, value: A}
+     * */
 
     /**
      * TODO persist request
@@ -44,59 +49,40 @@ public class VariableLoanCalcRepository implements LoanCalcRepository {
 
     @Override
     public LoanResponse find(UUID uuid) {
-        List<LoanResponse> responses = getResponsesFromFile();
-        final LoanResponse[] result = {null};
-        responses.stream()
-                .filter(response -> uuid.equals(response.getId()))
-                .findFirst()
-                .ifPresent(response -> result[0] = response);
-        return result[0];
+        Map<UUID, LoanResponse> responses = getResponsesFromFile();
+        return responses != null ? responses.get(uuid) : null;
     }
 
     @Override
     public List<LoanResponse> findByType(LoanType type) {
-        List<LoanResponse> responses = getResponsesFromFile();
+        Map<UUID, LoanResponse> responses = getResponsesFromFile();
 
-        return responses.stream()
+        return responses != null ? responses.values().stream()
                 .filter(response -> type.equals(response.getRequest().getType()))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()) : null;
     }
 
     @SneakyThrows
     private void saveToFile() {
-        List<String> stringsToSave = loans.values().stream()
-                .map(this::convertToJson)
-                .collect(Collectors.toList());
-        Files.write(
-                path
-                , stringsToSave
-                , StandardOpenOption.CREATE
-                , StandardOpenOption.TRUNCATE_EXISTING
-        );
+        try {
+            objectMapper.writeValue(path.toFile(), loans);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     @SneakyThrows
-    private List<LoanResponse> getResponsesFromFile() {
-        List<String> strings = Files.readAllLines(path);
-
-        List<LoanResponse> result = strings.stream()
-                .map(this::convertJsonToObject)
-                .collect(Collectors.toList());
-
-        LoanCalcLogger.log("repository", result.toString());
-
-        return result;
+    private static Map<UUID, LoanResponse> getResponsesFromFile() {
+        TypeReference<HashMap<UUID, LoanResponse>> typeRef = new TypeReference<>() {
+        };
+        try {
+            return (objectMapper != null && path != null)
+                    ? objectMapper.readValue(path.toFile(), typeRef)
+                    : new HashMap<>();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return new HashMap<>();
+        }
     }
 
-    @SneakyThrows
-    private String convertToJson(LoanResponse response) {
-        ObjectWriter ow = new ObjectMapper().writer();
-        return ow.writeValueAsString(response);
-    }
-
-    @SneakyThrows
-    private LoanResponse convertJsonToObject(String json) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(json, LoanResponse.class);
-    }
 }

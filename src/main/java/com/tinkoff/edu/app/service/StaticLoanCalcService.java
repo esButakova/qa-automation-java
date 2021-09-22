@@ -102,7 +102,7 @@ public class StaticLoanCalcService implements LoanCalcService {
 
         char[] chars = name.toCharArray();
         for (char c : chars) {
-            if (!Character.isLetter(c) && Character.compare(c, '-') != 0) {
+            if (!Character.isLetter(c) && c != '-') {
                 return false;
             }
         }
