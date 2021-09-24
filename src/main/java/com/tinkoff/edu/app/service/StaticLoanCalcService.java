@@ -35,7 +35,7 @@ public class StaticLoanCalcService implements LoanCalcService {
         try {
             validateRequest(request);
             LoanResponseType loanStatus = calculateResponseType(request);
-            LoanResponse loan = new LoanResponse(loanStatus, request);
+            LoanResponse loan = new LoanResponse(loanStatus, request, UUID.randomUUID());
             return loanCalcRepository.save(loan);
         } catch (IllegalArgumentException e) {
             throw new LoanServiceException("Ошибка валидации запроса", e);
@@ -102,7 +102,7 @@ public class StaticLoanCalcService implements LoanCalcService {
 
         char[] chars = name.toCharArray();
         for (char c : chars) {
-            if (!Character.isLetter(c) && Character.compare(c, '-') != 0) {
+            if (!Character.isLetter(c) && c != '-') {
                 return false;
             }
         }

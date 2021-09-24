@@ -2,6 +2,7 @@ package com.tinkoff.edu.app.model;
 
 import com.tinkoff.edu.app.enums.LoanResponseType;
 
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -9,15 +10,19 @@ import java.util.UUID;
  *
  * @author Elena Butakova
  */
-public class LoanResponse {
+public class LoanResponse{
     private LoanResponseType responseType;
     private final LoanRequest request;
     private final UUID id;
 
-    public LoanResponse(LoanResponseType responseType, LoanRequest request) {
+    public LoanResponse() {
+        this(null, null, null);
+    }
+
+    public LoanResponse(LoanResponseType responseType, LoanRequest request, UUID id) {
         this.responseType = responseType;
         this.request = request;
-        this.id = UUID.randomUUID();
+        this.id = id;
     }
 
     public LoanResponseType getResponseType() {
@@ -43,5 +48,18 @@ public class LoanResponse {
                 ", request=" + request +
                 ", id=" + id +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LoanResponse)) return false;
+        LoanResponse response = (LoanResponse) o;
+        return responseType == response.responseType && request.equals(response.request) && id.equals(response.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(responseType, request, id);
     }
 }
